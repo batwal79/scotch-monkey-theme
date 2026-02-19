@@ -1,117 +1,413 @@
-/** Critical CSS for the theme. This file is included on every page. */
+/* ==========================================================================
+   SCOTCH MONKEY — critical.css
+   Global styles, reset, typography, color system
+   ========================================================================== */
 
-/* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
-* {
+/* --- RESET --- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  min-height: 100svh;
-}
-
-html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
-  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: var(--font-body-size);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg-primary);
+  overflow-x: hidden;
 }
 
 img,
 picture,
 video,
-canvas,
 svg {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
 input,
 textarea,
 select {
   font: inherit;
-  border-radius: var(--style-border-radius-inputs);
+  color: inherit;
+  background: none;
+  border: none;
 }
 
-select {
-  background-color: var(--color-background);
-  color: currentcolor;
+/* --- ACCESSIBILITY --- */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 12px 24px;
+  background-color: var(--color-gold-primary);
+  color: var(--color-bg-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.2s ease;
 }
 
-dialog {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+.skip-to-content:focus {
+  top: 0;
 }
 
-p {
-  text-wrap: pretty;
-}
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
+/* --- TYPOGRAPHY --- */
+h1, h2, h3, h4, h5, h6,
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: var(--font-heading-spacing);
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--color-text);
 }
 
-p:empty {
-  display: none;
+h1, .h1 { font-size: clamp(32px, 6vw, 56px); }
+h2, .h2 { font-size: clamp(24px, 4vw, 40px); }
+h3, .h3 { font-size: clamp(20px, 3vw, 32px); }
+h4, .h4 { font-size: clamp(18px, 2.5vw, 24px); }
+
+.text-accent {
+  font-family: var(--font-accent);
+  font-weight: 900;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-:is(p, h1, h2, h3, h4, h5, h6):first-child,
-:empty:first-child + :where(p, h1, h2, h3, h4, h5, h6) {
-  margin-block-start: 0;
+.text-body-medium {
+  font-weight: 500;
 }
 
-:is(p, h1, h2, h3, h4, h5, h6):last-child,
-:where(p, h1, h2, h3, h4, h5, h6) + :has(+ :empty:last-child) {
-  margin-block-end: 0;
+.text-fine {
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-/** Theme styles below */
-body {
-  font-family: var(--font-primary--family);
-  background-color: var(--color-background);
-  color: var(--color-foreground);
+p + p {
+  margin-top: 1em;
 }
 
-/** Section layout utilities */
+/* --- LAYOUT --- */
+.container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--layout-gutter);
+  padding-right: var(--layout-gutter);
+}
 
-/**
- * Setup a grid that enables both full-width and constrained layouts
- * depending on the class of the child elements.
- *
- * By default, a minimum content margin is set on the left and right
- * sides of the section and the content is centered in the viewport to
- * not exceed the maximum page width.
- *
- * When a child element is given the `full-width` class, it will span
- * the entire viewport.
- */
-.shopify-section {
-  --content-width: min(
-    calc(var(--page-width) - var(--page-margin) * 2),
-    calc(100% - var(--page-margin) * 2)
-  );
-  --content-margin: minmax(var(--page-margin), 1fr);
-  --content-grid: var(--content-margin) var(--content-width) var(--content-margin);
+.container--full {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
 
-  /* This is required to make <img> elements work as background images */
+.section-padding {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+/* --- BUTTONS --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: var(--font-heading-spacing);
+  text-transform: uppercase;
+  line-height: 1;
+  border: 2px solid transparent;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background-color: var(--color-gold-primary);
+  color: var(--color-bg-primary);
+  border-color: var(--color-gold-primary);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-gold-secondary);
+  border-color: var(--color-gold-secondary);
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-gold-primary);
+  border-color: var(--color-gold-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-gold-primary);
+  color: var(--color-bg-primary);
+}
+
+.btn--small {
+  padding: 10px 20px;
+  font-size: 12px;
+}
+
+/* --- LINKS --- */
+.link-underline {
   position: relative;
-  grid-template-columns: var(--content-grid);
-  display: grid;
+  display: inline;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-gold-primary);
+  transition: width 0.3s ease;
+}
+
+.link-underline:hover::after {
   width: 100%;
 }
 
-/* Child elements, by default, are constrained to the central column of the grid. */
-.shopify-section > * {
-  grid-column: 2;
+/* --- FORMS --- */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--color-text);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-gold-secondary);
+  transition: border-color 0.25s ease;
 }
 
-/* Child elements that use the full-width utility class span the entire viewport. */
-.shopify-section > .full-width {
-  grid-column: 1 / -1;
+.form-input::placeholder {
+  color: rgba(245, 240, 232, 0.4);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-gold-primary);
+}
+
+/* --- BADGE --- */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.badge--sale {
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.badge--gold {
+  background-color: var(--color-gold-primary);
+  color: var(--color-bg-primary);
+}
+
+/* --- UTILITY --- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.text-center { text-align: center; }
+.text-gold { color: var(--color-gold-primary); }
+
+/* --- GRID --- */
+.grid {
+  display: grid;
+  gap: var(--layout-gutter);
+}
+
+.grid--2 { grid-template-columns: 1fr; }
+.grid--3 { grid-template-columns: 1fr; }
+.grid--4 { grid-template-columns: 1fr 1fr; }
+
+@media (min-width: 768px) {
+  .grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid--4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* --- SCROLLBAR (Webkit) --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-secondary);
+}
+
+/* === PRODUCT CARDS (shared) === */
+.product-card {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+.product-card__image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: var(--color-bg-secondary);
+  margin-bottom: 0;
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-card__image {
+  transform: scale(1.04);
+}
+
+.product-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.product-card__body {
+  background-color: var(--color-bg-secondary);
+  padding: 16px;
+}
+
+.product-card__vendor {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-gold-primary);
+  margin-bottom: 4px;
+}
+
+.product-card__title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: var(--font-heading-spacing);
+  text-transform: uppercase;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.product-card__price {
+  font-size: 14px;
+  color: rgba(245, 240, 232, 0.6);
+}
+
+.product-card__price--compare {
+  text-decoration: line-through;
+  color: rgba(245, 240, 232, 0.35);
+  margin-right: 8px;
+}
+
+.product-card__price--sale {
+  color: var(--color-accent);
+  font-weight: 500;
 }

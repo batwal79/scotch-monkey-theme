@@ -1,0 +1,136 @@
+{%- style -%}
+  .announcement-bar {
+    background-color: var(--color-gold-primary);
+    color: var(--color-bg-primary);
+    overflow: hidden;
+  }
+
+  .announcement-bar[data-dismissed="true"] {
+    display: none;
+  }
+
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 40px;
+    padding: 8px var(--layout-gutter);
+    max-width: var(--layout-max-width);
+    margin: 0 auto;
+  }
+
+  .announcement-bar__text {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .announcement-bar__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .announcement-bar__link:hover {
+    text-decoration: underline;
+  }
+
+  .announcement-bar__dismiss {
+    position: absolute;
+    right: var(--layout-gutter);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-bg-primary);
+    opacity: 0.6;
+    transition: opacity 0.25s ease;
+  }
+
+  .announcement-bar__dismiss:hover {
+    opacity: 1;
+  }
+
+  .announcement-bar__dismiss svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+{%- endstyle -%}
+
+{%- if section.settings.text != blank -%}
+  <div class="announcement-bar" data-section-id="{{ section.id }}" role="region" aria-label="Announcement">
+    <div class="announcement-bar__inner">
+      {%- if section.settings.link != blank -%}
+        <a href="{{ section.settings.link }}" class="announcement-bar__link">
+          <p class="announcement-bar__text">{{ section.settings.text }}</p>
+        </a>
+      {%- else -%}
+        <p class="announcement-bar__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.dismissible -%}
+        <button class="announcement-bar__dismiss" aria-label="Dismiss announcement" data-dismiss-bar>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.dismissible -%}
+    <script>
+      (function() {
+        const bar = document.querySelector('[data-section-id="{{ section.id }}"]');
+        const dismiss = bar ? bar.querySelector('[data-dismiss-bar]') : null;
+        if (!dismiss) return;
+
+        const key = 'sm-announcement-dismissed-{{ section.id }}';
+        if (sessionStorage.getItem(key) === 'true') {
+          bar.setAttribute('data-dismissed', 'true');
+        }
+
+        dismiss.addEventListener('click', function() {
+          bar.setAttribute('data-dismissed', 'true');
+          sessionStorage.setItem(key, 'true');
+        });
+      })();
+    </script>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "class": "section-announcement-bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "FREE SHIPPING ON ORDERS OVER $100"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link (optional)"
+    },
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow dismiss",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

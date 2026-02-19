@@ -1,0 +1,53 @@
+{%- style -%}
+  .page-404 {
+    background-color: var(--color-bg-primary);
+    text-align: center;
+    padding: 100px var(--layout-gutter) 120px;
+  }
+
+  .page-404__code {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(80px, 15vw, 160px);
+    letter-spacing: var(--font-heading-spacing);
+    color: var(--color-bg-secondary);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .page-404__heading {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(24px, 4vw, 36px);
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 12px;
+  }
+
+  .page-404__text {
+    font-size: 15px;
+    color: rgba(245, 240, 232, 0.5);
+    margin-bottom: 32px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+{%- endstyle -%}
+
+<section class="page-404">
+  <p class="page-404__code">404</p>
+  <h1 class="page-404__heading">PAGE NOT FOUND</h1>
+  <p class="page-404__text">The page you're looking for doesn't exist or has been moved.</p>
+  <a href="{{ routes.root_url }}" class="btn btn--primary">BACK TO HOME</a>
+</section>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

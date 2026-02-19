@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq-accordion",
+      "settings": {
+        "pre_heading": "Got Questions?",
+        "heading": "FREQUENTLY ASKED QUESTIONS"
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>All items are printed to order. Due to the custom nature of our products, all sales are final. If your item arrives damaged or defective, contact us within 48 hours of delivery and we'll make it right.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Please allow 5–10 business days for production, plus 3–7 business days for shipping. Orders over $100 CAD ship free.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What blanks do you use?",
+            "answer": "<p>Our hoodies use the Independent Trading Co. IND420XD — a 420 GSM heavyweight fleece. Our tees use the Shaka Wear SHMHSS at 250 GSM (7.5 oz). Premium weight, premium feel.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Do you restock sold-out items?",
+            "answer": "<p>Scotch Monkey operates on a drop model. Once a piece sells out, it may not return. Follow us on Instagram and join the Drop List for first access to new releases.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "How should I size my order?",
+            "answer": "<p>Our pieces run true to size. For an oversized streetwear fit, we recommend sizing up one. Check our Size Guide for detailed measurements by size.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"]
+    }
+  },
+  "order": [
+    "main",
+    "faq"
+  ]
+}

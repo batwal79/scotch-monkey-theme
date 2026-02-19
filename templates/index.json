@@ -1,20 +1,72 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "height": "full",
+        "pre_heading": "Est. MMXXIII — Premium Streetwear",
+        "heading": "DROP 001 IS HERE",
+        "subheading": "Premium streetwear crafted at the intersection of heritage and culture. Limited pieces. No restocks.",
+        "button_label": "SHOP DROP 001",
+        "button_link": "shopify://collections/drop-001",
+        "button_label_2": ""
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "pre_heading": "Now Available",
+        "heading": "DROP 001",
+        "description": "",
+        "products_to_show": 4,
+        "columns": "4",
+        "show_vendor": true,
+        "show_view_all": true,
+        "view_all_label": "VIEW ALL"
+      }
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "settings": {
+        "height": "medium",
+        "overlay_opacity": 55,
+        "content_position": "flex-start",
+        "text_alignment": "left",
+        "heading": "BLENDED CULTURE",
+        "text": "Where heritage meets the streets. Premium quality, limited runs, no compromises.",
+        "button_label": "EXPLORE",
+        "button_link": "shopify://pages/about"
+      }
+    },
+    "brand-story": {
+      "type": "brand-story",
+      "settings": {
+        "image_position": "left",
+        "pre_heading": "Est. MMXXIII",
+        "heading": "THE STORY",
+        "text": "<p>Scotch Monkey was born from a simple idea: streetwear should feel as premium as the culture it represents. Rooted in Scottish heritage and blended with contemporary street culture, every piece is designed to make a statement without saying a word.</p><p>We don't chase trends. We set a standard. Limited drops, premium blanks, no compromises.</p>",
+        "quote": "Blended Culture. Premium Standard.",
+        "button_label": "OUR STORY",
+        "button_link": "shopify://pages/about"
+      }
+    },
+    "email-signup": {
+      "type": "email-signup",
+      "settings": {
+        "pre_heading": "Don't Miss a Drop",
+        "heading": "JOIN THE DROP LIST",
+        "text": "First access to new drops, restocks, and exclusives. No spam, just heat.",
+        "placeholder": "Enter your email",
+        "button_text": "JOIN",
+        "fine_print": "By subscribing, you agree to receive marketing emails. Unsubscribe anytime."
+      }
     }
   },
   "order": [
-    "main"
+    "hero",
+    "featured-collection",
+    "image-banner",
+    "brand-story",
+    "email-signup"
   ]
 }

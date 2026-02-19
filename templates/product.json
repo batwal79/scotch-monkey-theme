@@ -1,17 +1,35 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
-      "type": "product",
-      "settings": {}
+      "type": "main-product",
+      "settings": {},
+      "blocks": {
+        "details": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Details & Materials",
+            "content": "<p>420 GSM heavyweight fleece. Independent Trading Co. IND420XD blank. DTG printed graphic. Pre-shrunk cotton-polyester blend.</p>",
+            "open_by_default": true
+          }
+        },
+        "sizing": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Sizing",
+            "content": "<p>True to size. For an oversized fit, size up one. See our Size Guide for detailed measurements.</p>",
+            "open_by_default": false
+          }
+        },
+        "shipping": {
+          "type": "collapsible",
+          "settings": {
+            "heading": "Shipping & Returns",
+            "content": "<p>Free shipping on orders over $100 CAD. Printed on demand — please allow 5–10 business days for production plus shipping. All sales final on printed-to-order items.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": ["details", "sizing", "shipping"]
     }
   },
   "order": [

@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "contact-form",
+      "settings": {
+        "pre_heading": "Get In Touch",
+        "heading": "CONTACT US",
+        "description": "Have a question about your order, sizing, or anything else? Drop us a line."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

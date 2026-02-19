@@ -1,0 +1,291 @@
+{%- style -%}
+  .main-collection {
+    background-color: var(--color-bg-primary);
+  }
+
+  /* --- Collection Header --- */
+  .collection-header {
+    text-align: center;
+    padding-top: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--color-bg-secondary);
+    margin-bottom: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .collection-header {
+      padding-top: 64px;
+      padding-bottom: 48px;
+      margin-bottom: 48px;
+    }
+  }
+
+  .collection-header__pre-heading {
+    font-family: var(--font-accent);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--color-gold-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .collection-header__title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(32px, 5vw, 48px);
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+
+  .collection-header__description {
+    font-size: 15px;
+    color: rgba(245, 240, 232, 0.6);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .collection-header__count {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245, 240, 232, 0.35);
+    margin-top: 16px;
+  }
+
+  /* --- Product Grid --- */
+  .collection-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--layout-gutter);
+    padding-bottom: 64px;
+  }
+
+  @media (min-width: 600px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collection-grid--3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .collection-grid--4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* --- Pagination --- */
+  .collection-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 64px;
+  }
+
+  .collection-pagination__link,
+  .collection-pagination__current {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--color-bg-secondary);
+    transition: all 0.25s ease;
+  }
+
+  .collection-pagination__link {
+    color: var(--color-text);
+  }
+
+  .collection-pagination__link:hover {
+    border-color: var(--color-gold-primary);
+    color: var(--color-gold-primary);
+  }
+
+  .collection-pagination__current {
+    background-color: var(--color-gold-primary);
+    color: var(--color-bg-primary);
+    border-color: var(--color-gold-primary);
+  }
+
+  /* --- Empty state --- */
+  .collection-empty {
+    text-align: center;
+    padding: 80px var(--layout-gutter);
+  }
+
+  .collection-empty__heading {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 24px;
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 12px;
+  }
+
+  .collection-empty__text {
+    font-size: 15px;
+    color: rgba(245, 240, 232, 0.5);
+    margin-bottom: 24px;
+  }
+{%- endstyle -%}
+
+<section class="main-collection" data-section-id="{{ section.id }}">
+  <div class="container">
+
+    {%- comment -%} Collection Header {%- endcomment -%}
+    <div class="collection-header">
+      {%- if section.settings.pre_heading != blank -%}
+        <p class="collection-header__pre-heading">{{ section.settings.pre_heading }}</p>
+      {%- endif -%}
+
+      <h1 class="collection-header__title">{{ collection.title }}</h1>
+
+      {%- if collection.description != blank and section.settings.show_description -%}
+        <div class="collection-header__description">{{ collection.description }}</div>
+      {%- endif -%}
+
+      <p class="collection-header__count">{{ collection.products_count }} {{ collection.products_count | pluralize: 'product', 'products' }}</p>
+    </div>
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    {%- paginate collection.products by section.settings.products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="collection-grid collection-grid--{{ section.settings.columns }}">
+          {%- for product in collection.products -%}
+            <a href="{{ product.url }}" class="product-card" aria-label="{{ product.title }}">
+              <div class="product-card__image-wrap">
+                {%- if product.featured_image != blank -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 800 }}"
+                    alt="{{ product.featured_image.alt | default: product.title }}"
+                    class="product-card__image"
+                    width="400"
+                    height="533"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div style="width:100%;height:100%;background:var(--color-bg-secondary);"></div>
+                {%- endif -%}
+
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="product-card__badge badge badge--sale">SALE</span>
+                {%- endif -%}
+              </div>
+
+              <div class="product-card__body">
+                {%- if section.settings.show_vendor -%}
+                  <span class="product-card__vendor">{{ product.vendor }}</span>
+                {%- endif -%}
+                <h2 class="product-card__title">{{ product.title }}</h2>
+                <div class="product-card__price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                    <span class="product-card__price--sale">{{ product.price | money }}</span>
+                  {%- else -%}
+                    {{ product.price | money }}
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="collection-pagination" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="collection-pagination__link" aria-label="Previous page">&larr;</a>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="collection-pagination__link">{{ part.title }}</a>
+              {%- else -%}
+                <span class="collection-pagination__current" aria-current="page">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="collection-pagination__link" aria-label="Next page">&rarr;</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+
+      {%- else -%}
+        <div class="collection-empty">
+          <h2 class="collection-empty__heading">NO PRODUCTS YET</h2>
+          <p class="collection-empty__text">This collection is empty. Check back soon for new drops.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">SHOP ALL</a>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "class": "section-main-collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_heading",
+      "label": "Pre-heading (accent font)",
+      "info": "Appears above collection title. E.g. 'Limited Edition'"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Desktop columns",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "x"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor name",
+      "default": true
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

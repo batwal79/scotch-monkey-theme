@@ -1,0 +1,97 @@
+{%- style -%}
+  .main-page {
+    background-color: var(--color-bg-primary);
+  }
+
+  .main-page__header {
+    text-align: center;
+    padding-top: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--color-bg-secondary);
+    margin-bottom: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .main-page__header {
+      padding-top: 64px;
+      padding-bottom: 40px;
+      margin-bottom: 48px;
+    }
+  }
+
+  .main-page__title {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(28px, 5vw, 44px);
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    line-height: 1.1;
+  }
+
+  .main-page__body {
+    max-width: 720px;
+    margin: 0 auto;
+    padding-bottom: 64px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(245, 240, 232, 0.75);
+  }
+
+  .main-page__body h2,
+  .main-page__body h3 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+  }
+
+  .main-page__body h2 { font-size: clamp(20px, 3vw, 28px); }
+  .main-page__body h3 { font-size: clamp(18px, 2.5vw, 22px); }
+
+  .main-page__body p + p { margin-top: 1em; }
+
+  .main-page__body a {
+    color: var(--color-gold-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .main-page__body ul,
+  .main-page__body ol {
+    margin: 1em 0;
+    padding-left: 1.5em;
+  }
+
+  .main-page__body ul { list-style: disc; }
+  .main-page__body ol { list-style: decimal; }
+  .main-page__body li { margin-bottom: 0.5em; }
+{%- endstyle -%}
+
+<section class="main-page section-padding" data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="main-page__header">
+      <h1 class="main-page__title">{{ page.title }}</h1>
+    </div>
+
+    {%- if page.content != blank -%}
+      <div class="main-page__body">
+        {{ page.content }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Content",
+  "class": "section-main-page",
+  "settings": [],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}

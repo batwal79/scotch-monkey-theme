@@ -1,36 +1,102 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-  <head>
-    {% # Inlined CSS Variables %}
-    {% render 'css-variables' %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    {% comment %}
-      Font preloading:
-      1. Preconnect to font CDN for faster connection
-      2. Preload only the critical font variant (base weight)
-      3. Additional variants load on-demand via @font-face
-    {% endcomment %}
-    {% unless settings.type_primary_font.system? %}
-      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  <title>
+    {%- if page_title -%}
+      {{ page_title }}
+      {%- if current_page != 1 %} — Page {{ current_page }}{% endif -%}
+      — {{ shop.name }}
+    {%- else -%}
+      {{ shop.name }}
+    {%- endif -%}
+  </title>
 
-      {% comment %} Preload the base font variant for initial page render {% endcomment %}
-      {{ settings.type_primary_font | font_url | preload_tag: as: 'font', crossorigin: 'anonymous' }}
-    {% endunless %}
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
 
-    {% # Load and preload the critical CSS %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+  {%- render 'meta-tags' -%}
 
-    {% # Social, title, etc. %}
-    {% render 'meta-tags' %}
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+  {%- endif -%}
 
-    {{ content_for_header }}
-  </head>
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Oswald:wght@800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 
-  <body>
-    {% sections 'header-group' %}
+  {% style %}
+    :root {
+      /* Colors — from theme settings, locked to brand spec */
+      --color-bg-primary: {{ settings.color_bg_primary }};
+      --color-bg-secondary: {{ settings.color_bg_secondary }};
+      --color-gold-primary: {{ settings.color_gold_primary }};
+      --color-gold-secondary: {{ settings.color_gold_secondary }};
+      --color-accent: {{ settings.color_accent }};
+      --color-text: {{ settings.color_text }};
 
+      /* Typography */
+      --font-heading: '{{ settings.font_heading_family }}', sans-serif;
+      --font-body: '{{ settings.font_body_family }}', sans-serif;
+      --font-accent: '{{ settings.font_accent_family }}', serif;
+      --font-heading-spacing: {{ settings.font_heading_letter_spacing }}em;
+      --font-body-size: {{ settings.font_body_size }}px;
+
+      /* Layout */
+      --layout-max-width: {{ settings.layout_max_width }}px;
+      --layout-gutter: {{ settings.layout_gutter }}px;
+
+      /* Derived */
+      --color-gold-primary-rgb: {{ settings.color_gold_primary | color_extract: 'red' }}, {{ settings.color_gold_primary | color_extract: 'green' }}, {{ settings.color_gold_primary | color_extract: 'blue' }};
+      --color-bg-primary-rgb: {{ settings.color_bg_primary | color_extract: 'red' }}, {{ settings.color_bg_primary | color_extract: 'green' }}, {{ settings.color_bg_primary | color_extract: 'blue' }};
+    }
+  {% endstyle %}
+
+  {{ 'critical.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+
+  {%- if template.name == 'product' -%}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": {{ product.title | json }},
+        "image": {{ product.featured_image | image_url: width: 1200 | json }},
+        "description": {{ product.description | strip_html | truncate: 500 | json }},
+        "brand": {
+          "@type": "Brand",
+          "name": {{ shop.name | json }}
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": {{ request.origin | append: product.url | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "price": {{ product.price | money_without_currency | strip_html | json }},
+          "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+        }
+      }
+    </script>
+  {%- endif -%}
+</head>
+
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}--{{ template.suffix }}{% endif %}">
+  <a class="skip-to-content" href="#main-content">Skip to content</a>
+
+  {% sections 'header-group' %}
+
+  <main id="main-content" role="main">
     {{ content_for_layout }}
+  </main>
 
-    {% sections 'footer-group' %}
-  </body>
+  {% sections 'footer-group' %}
+
+  <script src="{{ 'global.js' | asset_url }}" defer></script>
+</body>
 </html>

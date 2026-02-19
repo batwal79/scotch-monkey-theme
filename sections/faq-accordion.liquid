@@ -1,0 +1,171 @@
+{%- style -%}
+  .faq-accordion {
+    background-color: var(--color-bg-primary);
+  }
+
+  .faq-accordion__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .faq-accordion__pre-heading {
+    font-family: var(--font-accent);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--color-gold-primary);
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .faq-accordion__heading {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .faq-item {
+    border-top: 1px solid var(--color-bg-secondary);
+  }
+
+  .faq-item:last-child {
+    border-bottom: 1px solid var(--color-bg-secondary);
+  }
+
+  .faq-item__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-text);
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.25s ease;
+    line-height: 1.4;
+    gap: 16px;
+  }
+
+  .faq-item__trigger:hover {
+    color: var(--color-gold-primary);
+  }
+
+  .faq-item__icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item[open] .faq-item__icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-item__answer {
+    padding-bottom: 20px;
+    padding-right: 32px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(245, 240, 232, 0.65);
+  }
+
+  .faq-item__answer p + p {
+    margin-top: 0.75em;
+  }
+
+  .faq-item__answer a {
+    color: var(--color-gold-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+{%- endstyle -%}
+
+<section class="faq-accordion section-padding" data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="faq-accordion__inner">
+
+      {%- if section.settings.pre_heading != blank -%}
+        <p class="faq-accordion__pre-heading">{{ section.settings.pre_heading }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="faq-accordion__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        <details class="faq-item" {{ block.shopify_attributes }}>
+          <summary class="faq-item__trigger">
+            {{ block.settings.question }}
+            <svg class="faq-item__icon" viewBox="0 0 16 16" aria-hidden="true">
+              <line x1="8" y1="2" x2="8" y2="14"/>
+              <line x1="2" y1="8" x2="14" y2="8"/>
+            </svg>
+          </summary>
+          <div class="faq-item__answer">
+            {{ block.settings.answer }}
+          </div>
+        </details>
+      {%- endfor -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "class": "section-faq-accordion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_heading",
+      "label": "Pre-heading (accent font)",
+      "default": "Got Questions?"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "FREQUENTLY ASKED QUESTIONS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>All items are printed to order. Due to the custom nature of our products, all sales are final. If your item arrives damaged or defective, contact us within 48 hours of delivery and we'll make it right.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion"
+    }
+  ]
+}
+{% endschema %}

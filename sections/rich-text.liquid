@@ -1,0 +1,217 @@
+{%- style -%}
+  .rich-text {
+    background-color: var(--color-bg-primary);
+  }
+
+  .rich-text__inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .rich-text__inner--wide {
+    max-width: 960px;
+  }
+
+  .rich-text__pre-heading {
+    font-family: var(--font-accent);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--color-gold-primary);
+    margin-bottom: 8px;
+    letter-spacing: 0;
+    text-transform: none;
+    text-align: {{ section.settings.alignment }};
+  }
+
+  .rich-text__heading {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    line-height: 1.1;
+    margin-bottom: 12px;
+    text-align: {{ section.settings.alignment }};
+  }
+
+  .rich-text__divider {
+    width: 60px;
+    height: 2px;
+    background-color: var(--color-gold-primary);
+    margin-bottom: 24px;
+  }
+
+  .rich-text__divider--center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .rich-text__body {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(245, 240, 232, 0.75);
+    text-align: {{ section.settings.alignment }};
+  }
+
+  .rich-text__body h2,
+  .rich-text__body h3 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: var(--font-heading-spacing);
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+  }
+
+  .rich-text__body h2 {
+    font-size: clamp(20px, 3vw, 28px);
+  }
+
+  .rich-text__body h3 {
+    font-size: clamp(18px, 2.5vw, 22px);
+  }
+
+  .rich-text__body p + p {
+    margin-top: 1em;
+  }
+
+  .rich-text__body a {
+    color: var(--color-gold-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.25s ease;
+  }
+
+  .rich-text__body a:hover {
+    color: var(--color-gold-secondary);
+  }
+
+  .rich-text__body ul,
+  .rich-text__body ol {
+    margin: 1em 0;
+    padding-left: 1.5em;
+  }
+
+  .rich-text__body ul {
+    list-style: disc;
+  }
+
+  .rich-text__body ol {
+    list-style: decimal;
+  }
+
+  .rich-text__body li {
+    margin-bottom: 0.5em;
+  }
+
+  .rich-text__body blockquote {
+    font-family: var(--font-accent);
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--color-gold-primary);
+    line-height: 1.4;
+    padding-left: 20px;
+    border-left: 3px solid var(--color-gold-secondary);
+    margin: 1.5em 0;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .rich-text__cta {
+    margin-top: 32px;
+    text-align: {{ section.settings.alignment }};
+  }
+{%- endstyle -%}
+
+<section class="rich-text section-padding" data-section-id="{{ section.id }}">
+  <div class="container">
+    <div class="rich-text__inner{% if section.settings.width == 'wide' %} rich-text__inner--wide{% endif %}">
+
+      {%- if section.settings.pre_heading != blank -%}
+        <p class="rich-text__pre-heading">{{ section.settings.pre_heading }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="rich-text__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      <div class="rich-text__divider{% if section.settings.alignment == 'center' %} rich-text__divider--center{% endif %}"></div>
+
+      {%- if section.settings.body != blank -%}
+        <div class="rich-text__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="rich-text__cta">
+          <a href="{{ section.settings.button_link }}" class="btn btn--outline">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "class": "section-rich-text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "pre_heading",
+      "label": "Pre-heading (accent font)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow (720px)" },
+        { "value": "wide", "label": "Wide (960px)" }
+      ],
+      "default": "narrow"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text"
+    }
+  ]
+}
+{% endschema %}

@@ -1,4 +1,4 @@
-﻿{%- style -%}
+{%- style -%}
   .header {
     position: sticky;
     top: 0;
@@ -35,14 +35,13 @@
   }
 
   .header__logo-img {
-    height: auto;
-    width: 140px;
-    max-width: {{ section.settings.logo_width }}px;
+    height: 28px;
+    width: auto;
   }
 
   @media (min-width: 768px) {
     .header__logo-img {
-      width: {{ section.settings.logo_width }}px;
+      height: 34px;
     }
   }
 
@@ -279,7 +278,7 @@
 <header class="header" data-section-id="{{ section.id }}">
   <div class="header__inner">
 
-    {%- comment -%} Hamburger - mobile only {%- endcomment -%}
+    {%- comment -%} Hamburger — mobile only {%- endcomment -%}
     <button
       class="header__menu-toggle"
       aria-expanded="false"
@@ -292,16 +291,16 @@
       <span></span>
     </button>
 
-    {%- comment -%} Logo - Asset 4: Oswald Wordmark {%- endcomment -%}
+    {%- comment -%} Logo — Asset 4: Oswald Wordmark {%- endcomment -%}
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link" aria-label="{{ shop.name }}">
         {%- if section.settings.logo != blank -%}
           <img
-            src="{{ section.settings.logo | image_url: width: 400 }}"
+            src="{{ section.settings.logo | image_url: height: 68 }}"
             alt="{{ shop.name }}"
             class="header__logo-img"
-            width="{{ section.settings.logo_width }}"
-            height="auto"
+            width="{{ section.settings.logo.width }}"
+            height="34"
             loading="eager"
           >
         {%- else -%}
@@ -417,16 +416,6 @@
       "id": "logo",
       "label": "Logo image",
       "info": "Use Asset 4 — Oswald Wordmark (SCOTCH_MONKEY.png). Upload at 2x (minimum 400px wide)."
-    },
-    {
-      "type": "range",
-      "id": "logo_width",
-      "label": "Logo width",
-      "min": 80,
-      "max": 280,
-      "step": 10,
-      "default": 180,
-      "unit": "px"
     },
     {
       "type": "link_list",
