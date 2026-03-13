@@ -15,12 +15,12 @@
         "height": "full",
         "background_image": "shopify://shop_images/Sotch_Monkey_Hero_Background.jpg",
         "pre_heading": "Est. MMXXIII — Premium Streetwear",
-        "heading": "DROP 001 IS HERE",
+        "heading": "DROP 001",
         "subheading": "Premium streetwear crafted at the intersection of heritage and culture. Limited pieces. No restocks.",
-        "button_label": "SHOP DROP 001",
-        "button_link": "shopify://collections/drop-001",
-        "button_label_2": "",
-        "button_link_2": ""
+        "button_label": "SHOP NOW",
+        "button_link": "/collections/drop-001",
+        "button_label_2": "EXPLORE",
+        "button_link_2": "/collections/all"
       }
     },
     "featured-collection": {
@@ -54,12 +54,12 @@
     "brand-story": {
       "type": "brand-story",
       "settings": {
-        "image": "shopify://shop_images/Gold_and_black_scotch_monkey_logo.png",
+        "image": "shopify://shop_images/Brand-Story_1b35aefc-5a04-433a-ae4f-e60c86d8d19b.png",
         "image_position": "left",
-        "pre_heading": "Est. MMXXIII",
-        "heading": "THE STORY",
+        "pre_heading": "",
+        "heading": "Blended Culture. Premium Standard.",
         "text": "<p>Scotch Monkey was born from a simple idea: streetwear should feel as premium as the culture it represents. Rooted in Scottish heritage and blended with contemporary street culture, every piece is designed to make a statement without saying a word.</p><p>We don't chase trends. We set a standard. Limited drops, premium blanks, no compromises.</p>",
-        "quote": "Blended Culture. Premium Standard.",
+        "quote": "Est. MMXXIII",
         "button_label": "OUR STORY",
         "button_link": "shopify://pages/about"
       }
@@ -69,7 +69,7 @@
       "settings": {
         "icon_image": "shopify://shop_images/mascot-icon-160_4f997b80-b252-4f31-9849-03f8e923aebf.png",
         "pre_heading": "Don't Miss a Drop",
-        "heading": "JOIN THE DROP LIST",
+        "heading": "JOIN THE INNER CIRCLE",
         "text": "First access to new drops, restocks, and exclusives. No spam, just heat.",
         "placeholder": "Enter your email",
         "button_text": "JOIN",
