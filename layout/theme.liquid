@@ -1,102 +1,115 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#0A0A0A">
 
-  <title>
-    {%- if page_title -%}
-      {{ page_title }}
-      {%- if current_page != 1 %} — Page {{ current_page }}{% endif -%}
-      — {{ shop.name }}
-    {%- else -%}
-      {{ shop.name }}
+    {%- if settings.favicon -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32, crop: 'center' }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180, crop: 'center' }}">
     {%- endif -%}
-  </title>
 
-  {%- if page_description -%}
-    <meta name="description" content="{{ page_description | escape }}">
-  {%- endif -%}
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
 
-  {%- render 'meta-tags' -%}
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
 
-  {%- if settings.favicon != blank -%}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
-  {%- endif -%}
+    {%- comment -%} Open Graph {%- endcomment -%}
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:title" content="{{ page_title | escape }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ canonical_url }}">
 
-  <link rel="canonical" href="{{ canonical_url }}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Oswald:wght@800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+    {%- if template == 'product' and product.featured_image -%}
+      <meta property="og:type" content="product">
+      <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+      <meta property="og:image:width" content="1200">
+      <meta property="og:image:height" content="1200">
+    {%- elsif settings.og_image -%}
+      <meta property="og:image" content="{{ settings.og_image | image_url: width: 1200 }}">
+      <meta property="og:image:width" content="1200">
+      <meta property="og:image:height" content="630">
+    {%- endif -%}
 
-  {% style %}
-    :root {
-      /* Colors — from theme settings, locked to brand spec */
-      --color-bg-primary: {{ settings.color_bg_primary }};
-      --color-bg-secondary: {{ settings.color_bg_secondary }};
-      --color-gold-primary: {{ settings.color_gold_primary }};
-      --color-gold-secondary: {{ settings.color_gold_secondary }};
-      --color-accent: {{ settings.color_accent }};
-      --color-text: {{ settings.color_text }};
+    {%- if page_description -%}
+      <meta property="og:description" content="{{ page_description | escape }}">
+    {%- endif -%}
 
-      /* Typography */
-      --font-heading: '{{ settings.font_heading_family }}', sans-serif;
-      --font-body: '{{ settings.font_body_family }}', sans-serif;
-      --font-accent: '{{ settings.font_accent_family }}', serif;
-      --font-heading-spacing: {{ settings.font_heading_letter_spacing }}em;
-      --font-body-size: {{ settings.font_body_size }}px;
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title | escape }}">
+    {%- if settings.og_image -%}
+      <meta name="twitter:image" content="{{ settings.og_image | image_url: width: 1200 }}">
+    {%- endif -%}
 
-      /* Layout */
-      --layout-max-width: {{ settings.layout_max_width }}px;
-      --layout-gutter: {{ settings.layout_gutter }}px;
+    {{ content_for_header }}
 
-      /* Derived */
-      --color-gold-primary-rgb: {{ settings.color_gold_primary | color_extract: 'red' }}, {{ settings.color_gold_primary | color_extract: 'green' }}, {{ settings.color_gold_primary | color_extract: 'blue' }};
-      --color-bg-primary-rgb: {{ settings.color_bg_primary | color_extract: 'red' }}, {{ settings.color_bg_primary | color_extract: 'green' }}, {{ settings.color_bg_primary | color_extract: 'blue' }};
-    }
-  {% endstyle %}
+    {%- comment -%} Google Fonts {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@800&family=Montserrat:wght@400;500&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
 
-  {{ 'critical.css' | asset_url | stylesheet_tag }}
+    <style>
+      :root {
+        /* Brand colors — locked per creative direction */
+        --color-bg-primary: #0A0A0A;
+        --color-bg-secondary: #2D2D2D;
+        --color-gold-primary: #D4A017;
+        --color-gold-secondary: #8B6914;
+        --color-accent: #FF2D2D;
+        --color-text: #F5F0E8;
 
-  {{ content_for_header }}
+        /* Typography */
+        --font-heading: 'Oswald', sans-serif;
+        --font-body: 'Montserrat', sans-serif;
+        --font-accent: 'Playfair Display', serif;
+        --font-heading-weight: 800;
+        --font-heading-spacing: 0.18em;
+        --font-body-size: 15px;
 
-  {%- if template.name == 'product' -%}
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": {{ product.title | json }},
-        "image": {{ product.featured_image | image_url: width: 1200 | json }},
-        "description": {{ product.description | strip_html | truncate: 500 | json }},
-        "brand": {
-          "@type": "Brand",
-          "name": {{ shop.name | json }}
-        },
-        "offers": {
-          "@type": "Offer",
-          "url": {{ request.origin | append: product.url | json }},
-          "priceCurrency": {{ cart.currency.iso_code | json }},
-          "price": {{ product.price | money_without_currency | strip_html | json }},
-          "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+        /* Layout */
+        --layout-max-width: 1200px;
+        --layout-gutter: 20px;
+        --section-spacing: 60px;
+      }
+
+      @media (min-width: 768px) {
+        :root {
+          --layout-gutter: 40px;
+          --font-body-size: 16px;
         }
       }
-    </script>
-  {%- endif -%}
-</head>
 
-<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}--{{ template.suffix }}{% endif %}">
-  <a class="skip-to-content" href="#main-content">Skip to content</a>
+      @media (min-width: 1024px) {
+        :root {
+          --layout-gutter: 60px;
+        }
+      }
+    </style>
 
-  {% sections 'header-group' %}
+    {{ 'critical.css' | asset_url | stylesheet_tag }}
+  </head>
 
-  <main id="main-content" role="main">
-    {{ content_for_layout }}
-  </main>
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
 
-  {% sections 'footer-group' %}
+    <a class="skip-to-content" href="#MainContent">Skip to content</a>
 
-  <script src="{{ 'global.js' | asset_url }}" defer></script>
-</body>
+    {%- sections 'header-group' -%}
+
+    <main id="MainContent" class="main-content" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {%- sections 'footer-group' -%}
+
+    {{ 'global.js' | asset_url | script_tag }}
+
+  </body>
 </html>
