@@ -1,5 +1,5 @@
-/* ==========================================================================
-   SCOTCH MONKEY — critical.css
+﻿/* ==========================================================================
+   SCOTCH MONKEY â€” critical.css
    Global styles, reset, typography, color system
    ========================================================================== */
 
@@ -413,7 +413,7 @@ p + p {
 }
 Add-Content -Path "C:\Users\Bobby\scotch-monkey-theme\assets\critical.css" -Value @"
 
-/* === PRODUCT DESCRIPTION — override injected markup === */
+/* === PRODUCT DESCRIPTION â€” override injected markup === */
 .product-info__description h1,
 .product-info__description h2,
 .product-info__description h3,
@@ -442,3 +442,5 @@ Add-Content -Path "C:\Users\Bobby\scotch-monkey-theme\assets\critical.css" -Valu
   margin-bottom: 4px;
 }
 "@
+
+.product-info__description h1,.product-info__description h2,.product-info__description h3,.product-info__description h4{font-size:13px!important;letter-spacing:0.08em;font-weight:800;text-transform:uppercase;margin:12px 0 6px;color:rgba(245,240,232,0.5)!important;}
