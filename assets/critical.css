@@ -444,3 +444,36 @@ Add-Content -Path "C:\Users\Bobby\scotch-monkey-theme\assets\critical.css" -Valu
 "@
 
 .product-info__description h1,.product-info__description h2,.product-info__description h3,.product-info__description h4{font-size:13px!important;letter-spacing:0.08em;font-weight:800;text-transform:uppercase;margin:12px 0 6px;color:rgba(245,240,232,0.5)!important;}
+
+/* === FOOTER LAYOUT FIX === */
+.footer__grid {
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr 1fr !important;
+  gap: 48px !important;
+  align-items: start !important;
+}
+
+@media (max-width: 767px) {
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* === FOOTER LAYOUT FIX === */
+.footer__grid {
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr 1fr !important;
+  gap: 48px !important;
+  align-items: start !important;
+}
+
+@media (max-width: 767px) {
+  .footer__grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+.footer__top { display: grid !important; grid-template-columns: 1.5fr 1fr 1fr !important; gap: 48px !important; align-items: start !important; }
+@media (max-width: 767px) { .footer__top { grid-template-columns: 1fr !important; } }
