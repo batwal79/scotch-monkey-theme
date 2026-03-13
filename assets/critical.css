@@ -411,3 +411,34 @@ p + p {
   color: var(--color-accent);
   font-weight: 500;
 }
+Add-Content -Path "C:\Users\Bobby\scotch-monkey-theme\assets\critical.css" -Value @"
+
+/* === PRODUCT DESCRIPTION — override injected markup === */
+.product-info__description h1,
+.product-info__description h2,
+.product-info__description h3,
+.product-info__description h4,
+.product-info__description h5,
+.product-info__description h6 {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  margin-top: 16px;
+  color: var(--color-text);
+}
+
+.product-info__description ul,
+.product-info__description ol {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.product-info__description li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(245, 240, 232, 0.7);
+  margin-bottom: 4px;
+}
+"@
