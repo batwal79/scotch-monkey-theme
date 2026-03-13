@@ -11,43 +11,39 @@
     "name": "Colors",
     "settings": [
       {
-        "type": "header",
-        "content": "Brand Colors"
-      },
-      {
         "type": "color",
-        "id": "color_bg_primary",
-        "label": "Background Primary",
+        "id": "color_background_primary",
+        "label": "Background primary",
         "default": "#0A0A0A",
         "info": "Deep Black — page backgrounds, hero sections"
       },
       {
         "type": "color",
-        "id": "color_bg_secondary",
-        "label": "Background Secondary",
+        "id": "color_background_secondary",
+        "label": "Background secondary",
         "default": "#2D2D2D",
         "info": "Charcoal — cards, product tiles, footer"
       },
       {
         "type": "color",
         "id": "color_gold_primary",
-        "label": "Gold Primary",
+        "label": "Gold primary",
         "default": "#D4A017",
         "info": "Amber Gold — CTAs, logo accent, highlights"
       },
       {
         "type": "color",
         "id": "color_gold_secondary",
-        "label": "Gold Secondary",
+        "label": "Gold secondary",
         "default": "#8B6914",
         "info": "Whisky Brown — hover states, depth, borders"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accent (Urgency Only)",
+        "label": "Accent (urgency only)",
         "default": "#FF2D2D",
-        "info": "Electric Red — sale badges, low-stock warnings ONLY"
+        "info": "Electric Red — sale/urgency badges ONLY"
       },
       {
         "type": "color",
@@ -62,54 +58,24 @@
     "name": "Typography",
     "settings": [
       {
-        "type": "header",
-        "content": "Display / Headings"
-      },
-      {
-        "type": "text",
-        "id": "font_heading_family",
-        "label": "Heading Font Family",
-        "default": "Oswald",
-        "info": "ExtraBold (800) only. Do not use lighter weights on dark backgrounds."
-      },
-      {
-        "type": "text",
-        "id": "font_heading_letter_spacing",
-        "label": "Heading Letter Spacing (em)",
-        "default": "0.18",
-        "info": "Brand spec: 0.15–0.20em. Enter decimal value."
-      },
-      {
-        "type": "header",
-        "content": "Body / UI"
-      },
-      {
-        "type": "text",
-        "id": "font_body_family",
-        "label": "Body Font Family",
-        "default": "Montserrat",
-        "info": "Regular (400) for body, Medium (500) for labels/subheadings."
+        "type": "select",
+        "id": "font_heading_weight",
+        "label": "Heading font weight",
+        "options": [
+          { "value": "800", "label": "ExtraBold 800" }
+        ],
+        "default": "800",
+        "info": "Oswald — always 800 on dark backgrounds"
       },
       {
         "type": "range",
-        "id": "font_body_size",
-        "label": "Base Body Font Size (px)",
-        "min": 14,
-        "max": 18,
+        "id": "font_heading_letter_spacing",
+        "label": "Heading letter spacing (em × 100)",
+        "min": 10,
+        "max": 25,
         "step": 1,
-        "default": 16,
-        "unit": "px"
-      },
-      {
-        "type": "header",
-        "content": "Accent Font"
-      },
-      {
-        "type": "text",
-        "id": "font_accent_family",
-        "label": "Accent Font Family",
-        "default": "Playfair Display",
-        "info": "Black (900). Taglines, pull quotes, 'Est. MMXXIII' stamps only."
+        "default": 18,
+        "info": "Divide by 100 for em value. 18 = 0.18em"
       }
     ]
   },
@@ -117,74 +83,109 @@
     "name": "Layout",
     "settings": [
       {
-        "type": "header",
-        "content": "Container"
-      },
-      {
         "type": "range",
-        "id": "layout_max_width",
-        "label": "Max Content Width (px)",
+        "id": "page_width",
+        "label": "Page width (px)",
         "min": 1000,
-        "max": 1440,
-        "step": 20,
-        "default": 1280,
-        "unit": "px"
+        "max": 1600,
+        "step": 10,
+        "default": 1200
       },
       {
         "type": "range",
-        "id": "layout_gutter",
-        "label": "Content Gutter (px)",
-        "min": 16,
-        "max": 48,
+        "id": "spacing_sections",
+        "label": "Section spacing (px)",
+        "min": 20,
+        "max": 100,
         "step": 4,
-        "default": 24,
-        "unit": "px"
-      },
-      {
-        "type": "header",
-        "content": "Free Shipping"
-      },
-      {
-        "type": "text",
-        "id": "free_shipping_threshold",
-        "label": "Free Shipping Threshold",
-        "default": "100",
-        "info": "Dollar amount (CAD) for free shipping messaging."
+        "default": 60
       }
     ]
   },
   {
-    "name": "Favicon & Sharing",
+    "name": "Favicon & Social Sharing",
     "settings": [
-      {
-        "type": "header",
-        "content": "Favicon"
-      },
       {
         "type": "image_picker",
         "id": "favicon",
-        "label": "Favicon image",
-        "info": "Use Asset 1 — Geometric monkey face icon. Upload as 180×180px PNG with transparent background."
-      },
-      {
-        "type": "header",
-        "content": "Social Sharing (OG Image)"
+        "label": "Favicon",
+        "info": "32×32px PNG. Use Asset 1 — BossyBob geometric icon."
       },
       {
         "type": "image_picker",
         "id": "og_image",
-        "label": "Default share image",
-        "info": "Shown when pages are shared on social media. Recommended: 1200×630px. Use Asset 4 (Oswald Wordmark) on black background."
+        "label": "Social sharing image (OG)",
+        "info": "1200×630px. Shown when the store URL is shared on social media. Use Asset 4 wordmark on black background."
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Use SCOTCH_MONKEY.png (Asset 4) — Oswald wordmark, transparent background"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width (px)",
+        "min": 80,
+        "max": 300,
+        "step": 10,
+        "default": 180
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_header",
+        "label": "Sticky header",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_announcement_bar",
+        "label": "Show announcement bar",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "footer_logo",
+        "label": "Footer logo",
+        "info": "Use SCOTCH_MONKEY.png (Asset 4)"
+      },
+      {
+        "type": "range",
+        "id": "footer_logo_width",
+        "label": "Footer logo width (px)",
+        "min": 60,
+        "max": 200,
+        "step": 10,
+        "default": 140
+      },
+      {
+        "type": "text",
+        "id": "footer_tagline",
+        "label": "Footer tagline",
+        "default": "Blended Culture. Premium Standard."
+      },
+      {
+        "type": "text",
+        "id": "footer_copyright",
+        "label": "Copyright text",
+        "default": "© 2025 Scotch Monkey. All rights reserved."
       }
     ]
   },
   {
     "name": "Social Media",
     "settings": [
-      {
-        "type": "header",
-        "content": "Social Links"
-      },
       {
         "type": "url",
         "id": "social_instagram",
@@ -194,11 +195,47 @@
         "type": "url",
         "id": "social_tiktok",
         "label": "TikTok URL"
+      }
+    ]
+  },
+  {
+    "name": "Cart & Shipping",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold (CAD)",
+        "default": 100,
+        "info": "Used by cart progress bar and announcement bar"
       },
       {
-        "type": "url",
-        "id": "social_twitter",
-        "label": "X (Twitter) URL"
+        "type": "checkbox",
+        "id": "show_cart_progress_bar",
+        "label": "Show free shipping progress bar in cart",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Product Pages",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show vendor on product page",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_sku",
+        "label": "Show SKU on product page",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_zoom",
+        "label": "Enable image zoom on hover",
+        "default": true
       }
     ]
   }
